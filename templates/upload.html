@@ -2,169 +2,104 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Upload Image</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image to Sketch | Professional AI Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/upload.css') }}"
     />
-    <!-- <link rel="stylesheet" href="../static/css/upload.css" /> -->
   </head>
 
   <body>
-    <div class="bg-container">
-      <div class="right-container">
-        <div class="content-container">
-          <div class="bread-head-para-container">
-            <div class="breadcrumb">
-              <div class="icon-box">
-                <img
-                  src="../static/assets/Img_out-box_light.svg"
-                  alt="Intro-Icon"
-                />
-              </div>
-              <text class="intro-text">PROJECT</text>
+    <div class="main-wrapper">
+      <div class="container hero-section">
+        <div class="hero-content">
+          <div class="badge">AI-Powered Art</div>
+          <h1 class="hero-title">Transform Photos into <span>Pencil Sketches</span></h1>
+          <p class="hero-subtitle">
+            Upload your images and watch them instantly turn into professional-grade sketches using advanced computer vision.
+          </p>
+          
+          <div class="features-list">
+            <div class="feature-item">
+              <span class="feature-icon">✨</span>
+              <span>Instant AI Sketch</span>
             </div>
-            <div class="heading-para-container">
-              <h1 class="page-heading">Image to Sketch</h1>
-              <p class="description-para">
-                Welcome to project
-              </p>
+            <div class="feature-item">
+              <span class="feature-icon">🔒</span>
+              <span>Private & Secure</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">⚡</span>
+              <span>High Quality</span>
             </div>
           </div>
-        
         </div>
-      </div>
 
-      <div class="left-container">
-        <div class="card">
-          <form
-            class="upload-form"
-            id="upload-form"
-            method="post"
-            action="/upload"
-            enctype="multipart/form-data"
-          >
-            <div class="heading-container">
-              <span>Choose Your Image</span>
+        <div class="upload-section">
+          <div class="glass-card">
+            <form
+              class="upload-form"
+              id="upload-form"
+              method="post"
+              action="/upload"
+              enctype="multipart/form-data"
+            >
+              <div class="form-header">
+                <h2>Get Started</h2>
+                <p>Upload a photo (PNG, JPG, or WEBP)</p>
+              </div>
+
               <input
                 type="file"
                 id="file-input"
                 name="file"
+                accept="image/*"
                 required
                 style="display: none"
               />
-              <div class="upload-container" id="upload-container">
-                <div class="inner-upload-container">
-                  <div class="upload-icon-box">
-                    <img
-                      class="upload-icon"
-                      src="{{ url_for('static', filename='assets/upload-icon.svg') }}"
-                      alt="Upload Icon"
-                    />
-                  </div>
-                  <div class="text-tooltip">
-                    Click or drag file to this area to upload
-                  </div>
-                </div>
-              </div>
 
-              <div class="bottom-btn-content-container">
-                <div class="message-1">Upload and Transform</div>
-
-                <div id="file-info" class="file-info" style="display: none">
-                  <div id="file-name"></div>
-                  <button type="button" id="remove-file" class="remove-file">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="22"
-                      height="22"
-                      fill="none"
-                      viewBox="0 0 22 22"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 6.176h16M9 3h6m-5 13.765v-6.353m4 6.353v-6.353M15.5 21h-7c-1.105 0-2-.948-2-2.118L6.043 7.28c-.023-.601.43-1.103 1-1.103h9.915c.568 0 1.022.502.999 1.103L17.5 18.882c0 1.17-.895 2.118-2 2.118Z"
-                      />
+              <div class="drop-zone" id="upload-container">
+                <div class="drop-zone-content">
+                  <div class="upload-illustration">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 16V8M12 8L9 11M12 8L15 11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M3 15V16C3 18.2091 4.79086 20 7 20H17C19.2091 20 21 18.2091 21 16V15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M3 9V8C3 5.79086 4.79086 4 7 4H17C19.2091 4 21 5.79086 21 8V9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 2"/>
                     </svg>
-                  </button>
+                  </div>
+                  <p class="drop-text">Click or drag file to upload</p>
+                  <p class="drop-subtext">Max size: 16MB</p>
                 </div>
-
-                <div class="buttons-container">
-                  <div class="buttons" id="convert-btn">Sketch-ify</div>
+                <div id="image-preview" class="image-preview" style="display: none;">
+                  <img src="" alt="Preview" id="preview-img">
                 </div>
               </div>
-            </div>
-          </form>
-          <div class="content"></div>
+
+              <div id="file-info" class="file-status" style="display: none">
+                <span id="file-name"></span>
+                <button type="button" id="remove-file" class="btn-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+
+              <button type="submit" class="btn-primary" id="convert-btn">
+                <span>Create Sketch</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var uploadContainer = document.getElementById("upload-container");
-        var fileInput = document.getElementById("file-input");
-        var fileInfo = document.getElementById("file-info");
-        var fileNameSpan = document.getElementById("file-name");
-        var removeFileButton = document.getElementById("remove-file");
-        var convertBtn = document.getElementById("convert-btn");
-        var uploadForm = document.getElementById("upload-form");
-
-        uploadContainer.addEventListener("click", function () {
-          fileInput.click();
-        });
-
-        uploadContainer.addEventListener("dragover", function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          uploadContainer.classList.add("dragover");
-        });
-
-        uploadContainer.addEventListener("dragleave", function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          uploadContainer.classList.remove("dragover");
-        });
-
-        uploadContainer.addEventListener("drop", function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          uploadContainer.classList.remove("dragover");
-          var files = e.dataTransfer.files;
-          if (files.length > 0) {
-            fileInput.files = files;
-            displayFileInfo(files[0]);
-          }
-        });
-
-        fileInput.addEventListener("change", function () {
-          if (fileInput.files.length > 0) {
-            displayFileInfo(fileInput.files[0]);
-          }
-        });
-
-        removeFileButton.addEventListener("click", function () {
-          fileInput.value = "";
-          fileInfo.style.display = "none";
-        });
-
-        convertBtn.addEventListener("click", function (e) {
-          e.preventDefault();
-          if (fileInput.files.length > 0) {
-            uploadForm.submit();
-          } else {
-            alert("Please upload a file first.");
-          }
-        });
-
-        function displayFileInfo(file) {
-          fileNameSpan.textContent = file.name;
-          fileInfo.style.display = "flex";
-        }
-      });
-    </script>
+    <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
   </body>
 </html>
